@@ -1,63 +1,28 @@
-// import React, { useEffect, useState } from 'react'
-// import { Link } from 'react-router-dom'
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 
-// const Home = () => {
-//      const [products, setProducts] = useState([]);
+const Home = () => {
+  const [products, setProducts] = useState([]);
 
-//   useEffect(() => {
-//     API.get('/products')
-//       .then(res => setProducts(res.data))
-//       .catch(err => console.error(err));
-//   }, []);
+  useEffect(() => {
+    axios.get("http://localhost:4950/api/products")
+      .then(res => setProducts(res.data))
+      .catch(err => console.error(err));
+  }, []);
 
-//   return (
-//     <>
-//        <div style={{ padding: 20 }}>
-// //       <h1>Products</h1>
-// //       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 16 }}>
-//       {products.map(p => (
-//           <div key={p._id} style={{ border: '1px solid #ddd', padding: 12 }}>
-//             {p.image && <img src={`http://localhost:5000${p.image}`} alt={p.name} style={{ width: '100%', height: 140, objectFit: 'cover' }} />}
-//             <h3>{p.name}</h3>
-//             <p>${p.price}</p>
-//             <Link to={`/product/${p._id}`}>View</Link>
-//           </div>
-//         ))}
-//       </div>
-//     </div>
+  return (
+    <div className="p-8 grid grid-cols-3 gap-6">
+      {products.map(p => (
+        <div key={p._id} className="border p-4 rounded-lg">
+          <h2 className="text-lg font-bold">{p.name}</h2>
+          <p>${p.price}</p>
+  ;        <button className="bg-amber-600 text-white px-4 py-2 rounded mt-2">
+            Add to Cart
+          </button>
+        </div>
+      ))}
+    </div>
+  );
+};
 
-//     </>
-//   )
-// }
-
-// export default Home
-
-// // import React, { useEffect, useState } from 'react';
-// // import API from '../api';
-// // import { Link } from 'react-router-dom';
-
-// // export default function Home() {
-// //   const [products, setProducts] = useState([]);
-
-// //   useEffect(() => {
-// //     API.get('/products')
-// //       .then(res => setProducts(res.data))
-// //       .catch(err => console.error(err));
-// //   }, []);
-
-// //   return (
-// //     <div style={{ padding: 20 }}>
-// //       <h1>Products</h1>
-// //       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 16 }}>
-// //         {products.map(p => (
-// //           <div key={p._id} style={{ border: '1px solid #ddd', padding: 12 }}>
-// //             {p.image && <img src={`http://localhost:5000${p.image}`} alt={p.name} style={{ width: '100%', height: 140, objectFit: 'cover' }} />}
-// //             <h3>{p.name}</h3>
-// //             <p>${p.price}</p>
-// //             <Link to={`/product/${p._id}`}>View</Link>
-// //           </div>
-// //         ))}
-// //       </div>
-// //     </div>
-// //   );
-// // }
+export default Home;
