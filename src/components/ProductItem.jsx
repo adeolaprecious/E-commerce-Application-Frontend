@@ -1,7 +1,7 @@
 // 📁 src/components/ProductItem.jsx
 
 import React from 'react';
-import { useCart } from '../context/CartContext';
+import { useCart } from '../context/useCart';
 // Assume you'll implement a context or Redux action for adding to cart
 // import { useCart } from '../context/CartContext'; 
 

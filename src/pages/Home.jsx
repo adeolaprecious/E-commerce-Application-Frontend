@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import ProductItem from '../components/ProductItem';
-import { useCart } from '../context/CartContext';
+import { useCart } from '../context/useCart';
 
 const API_BASE_URL = 'https://e-commerce-application-backend-u42p.onrender.com';
 const Home = () => {

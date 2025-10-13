@@ -1,7 +1,7 @@
 // 📁 src/pages/Cart.jsx
 
 import React from 'react';
-import { useCart } from '../context/CartContext';
+import { useCart } from '../context/useCart';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
