@@ -13,7 +13,7 @@ const Signup = () => {
 
   const addUsers = () => {
     let newUser = { firstName, lastName, email, password,}
-    axios.post('http://https://e-commerce-application-backend-u42p.onrender.com/user/register', newUser)
+    axios.post('http://e-commerce-application-backend-u42p.onrender.com/user/register', newUser)
       .then((res) => {
         console.log('Response:', res.data);
         alert(res.data.message || "Signup successful! Please login");
