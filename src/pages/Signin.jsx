@@ -11,7 +11,7 @@ const Signin = () => {
 
   const loginUser = () => {
     const oldUser = { email, password }
-    axios.post("http://localhost:4950/user/login", oldUser) // keep local for now
+    axios.post("http://node-render-u7nh.onrender.com/user/signin", oldUser)
       .then((res) => {
         console.log("Response:", res.data);
 

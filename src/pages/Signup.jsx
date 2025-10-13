@@ -13,7 +13,7 @@ const Signup = () => {
 
   const addUsers = () => {
     let newUser = { firstName, lastName, email, password,}
-    axios.post('http://localhost:4950/user/register', newUser)
+    axios.post('http://node-render-u7nh.onrender.com/user/signup', newUser)
       .then((res) => {
         console.log('Response:', res.data);
         alert(res.data.message || "Signup successful! Please login");
