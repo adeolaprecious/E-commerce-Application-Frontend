@@ -1,5 +1,3 @@
-// 📁 src/pages/Cart.jsx
-
 import React from 'react';
 import { useCart } from '../context/useCart';
 import axios from 'axios';
@@ -26,12 +24,9 @@ const Cart = () => {
     const handleCheckout = async () => {
         if (!cart || cart.items.length === 0) return;
         try {
-            // Node.js route: POST /api/orders
             await axios.post(`${API_BASE_URL}/api/orders`, {}, getAuthHeader());
             alert("Order placed successfully! Redirecting to orders page.");
-
-            // Clear the cart locally and redirect
-            fetchCart();
+            await fetchCart();
             navigate('/order');
 
         } catch (error) {
@@ -57,8 +52,7 @@ const Cart = () => {
                 {cart.items.map((item, index) => (
                     <div key={index} className="flex justify-between items-center p-4 border rounded-lg bg-white shadow-sm">
                         <div className="flex items-center space-x-4">
-                            {/* Assuming product object is fully populated from backend */}
-                            <img src={item.product.imageUrl || 'placeholder.png'} alt={item.product.name} className="w-16 h-16 object-cover rounded" />
+                            <img src={item.product.image || 'placeholder.png'} alt={item.product.name} className="w-16 h-16 object-cover rounded" />
                             <div>
                                 <h3 className="font-semibold">{item.product.name}</h3>
                                 <p className="text-sm text-gray-600">${item.product.price.toFixed(2)} x {item.quantity}</p>
@@ -68,12 +62,11 @@ const Cart = () => {
                             ${(item.product.price * item.quantity).toFixed(2)}
                         </div>
                         <button
-                            onClick={() => removeFromCart(item.product._id)} // 👈 Call the remove function
+                            onClick={() => removeFromCart(item.product._id)}
                             className="text-red-500 hover:text-red-700 font-semibold text-sm"
                         >
                             Remove
                         </button>
-                        {/* ⚠️ To complete this page, you need to implement functions to update/remove items in CartContext */}
                     </div>
                 ))}
             </div>

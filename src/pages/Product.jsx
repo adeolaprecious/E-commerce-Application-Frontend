@@ -1,5 +1,3 @@
-// 📁 src/pages/Products.jsx
-
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import ProductItem from '../components/ProductItem';

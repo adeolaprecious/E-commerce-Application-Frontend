@@ -37,15 +37,15 @@ const Signup = () => {
           <h2 className="text-2xl font-semibold text-center mb-5">Create account</h2>
         </div>
 
-        <form action="/user/register" method="POST">
+        <form>
           <div className="mb-4">
             <label htmlFor="firstName" className="block text-sm font-medium mb-1">First name</label>
-            <input type="text" id="name" name="firstname" className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-amber-300" required onChange={(e) => setfirstName(e.target.value)} />
+            <input type="text" id="firstname" name="firstname" className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-amber-300" required onChange={(e) => setfirstName(e.target.value)} />
           </div>
 
           <div className="mb-4">
             <label htmlFor="lastName" className="block text-sm font-medium mb-1">Last name</label>
-            <input type="text" id="name" name="lastName" className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-amber-300" required  onChange={(e) => setlastName(e.target.value)} />
+            <input type="text" id="lastname" name="lastName" className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-amber-300" required  onChange={(e) => setlastName(e.target.value)} />
           </div>
 
           <div className="mb-4">

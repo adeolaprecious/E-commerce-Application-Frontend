@@ -1,5 +1,3 @@
-// 📁 src/pages/Order.jsx
-
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import moment from 'moment'; // ⚠️ You may need to install 'moment'
@@ -78,7 +76,6 @@ const Order = () => {
                     </div>
                 ))}
             </div>
-            {/* ⚠️ Install Moment.js if you use it: npm install moment */}
         </div>
     );
 }

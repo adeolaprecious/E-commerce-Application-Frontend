@@ -1,9 +1,7 @@
-// 📁 src/components/ProductItem.jsx
-
 import React from 'react';
 import { useCart } from '../context/useCart';
 // Assume you'll implement a context or Redux action for adding to cart
-// import { useCart } from '../context/CartContext'; 
+// import { useCart } from '../context/CartContext';
 
 const ProductItem = ({ product }) => {
        const { addToCart } = useCart(); // 👈 Destructure the function
@@ -17,13 +15,13 @@ const ProductItem = ({ product }) => {
     return (
         <div className="border rounded-lg shadow-md p-4 flex flex-col items-center" style={{ backgroundColor: '#fbf6ef' }}>
             <img 
-                src={product.imageUrl || 'placeholder.png'} 
+                src={product.image || 'placeholder.png'} 
                 alt={product.name} 
                 className="w-full h-40 object-cover rounded-md mb-3"
             />
-            <h3 className="text-lg font-semibold text-center">{product.name}</h3>
-            <p className="text-xl font-bold text-amber-600">${product.price.toFixed(2)}</p>
-            <p className="text-sm text-gray-500 mb-4">In stock: {product.stock}</p>
+            <h3 className="text-lg font-semibold text-center text-amber-500">{product.name}</h3>
+            <p className="text-xl font-bold text-amber-600">₦{product.price.toFixed(2)}</p>
+            <p className="text-sm text-amber-500 mb-4">In stock: {product.stock}</p>
             <button 
                 onClick={handleAddToCart}
                 className="w-full py-2 rounded-lg bg-amber-600 text-white font-medium hover:bg-amber-700 disabled:bg-gray-400"

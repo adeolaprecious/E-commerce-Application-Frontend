@@ -4,7 +4,8 @@ import { CartContext } from './cartContextStore';
 const API_BASE_URL = 'https://e-commerce-application-backend-u42p.onrender.com'; 
 
 export const CartProvider = ({ children }) => {
-    const [cart, setCart] = useState(null);
+    // const [cart, setCart] = useState(null);
+    const [cart, setCart] = useState({ items: [] });
     const [loading, setLoading] = useState(true);
 
     // --- Helper Function ---

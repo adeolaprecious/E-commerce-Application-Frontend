@@ -63,3 +63,16 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
+
+// const token = localStorage.getItem('token');
+// {token ? (
+//   <button onClick={() => {localStorage.removeItem('token'); window.location.href = '/signin';}}>
+//     Sign Out
+//   </button>
+// ) : (
+//   <>
+//     <Link to="/signin">Sign In</Link>
+//     <Link to="/signup">Sign Up</Link>
+//   </>
+// )}

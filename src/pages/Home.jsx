@@ -1,9 +1,8 @@
-// 📁 src/pages/Home.jsx
-
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import ProductItem from '../components/ProductItem';
 import { useCart } from '../context/useCart';
+// import ProductList from '../components/ProductList';
 
 const API_BASE_URL = 'https://e-commerce-application-backend-u42p.onrender.com';
 const Home = () => {
@@ -45,10 +44,8 @@ const Home = () => {
                 Featured Products ({cartTotalItems} items in cart) 
             </h1>
             <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8">
-                {/* Map the products to the ProductItem component */}
                 {products.length > 0 ? (
                     products.map(product => (
-                        // ⚠️ NOTE: You must create ProductItem.jsx component
                         <ProductItem key={product._id} product={product} />
                     ))
                 ) : (

@@ -40,7 +40,7 @@ const Signin = () => {
             <h2 className="text-2xl font-semibold text-center mb-6">Welcome back</h2>
           </div>
 
-          <form action="/user/login" method="POST">
+          <form>
             <div className="mb-4">
               <label htmlFor="email" className="block text-sm font-medium mb-1"> Email </label>
               <input type="email" id="email" name="email" className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-amber-300" required onChange={(e) => setEmail(e.target.value)} />

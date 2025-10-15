@@ -1,5 +1,5 @@
 import React from "react";
-import { Routes, Route ,Navigate} from "react-router-dom";
+import { Routes, Route ,Navigate, useLocation} from "react-router-dom";
 import Signup from "./pages/Signup"
 import Signin from "./pages/Signin"
 import ProtectedRoute from './components/ProtectedRoute';
@@ -11,9 +11,14 @@ import Product from "./pages/Product"
 import Landingpage from "./pages/Landingpage";
 
 const App = () => {
+    const location = useLocation();
+
+    const hideNavbarPaths = ["/signin", "/signup", "/"];
+    const showNavbar = !hideNavbarPaths.includes(location.pathname)
   return (
     <>
-    <Navbar/>
+    {/* <Navbar/> */}
+     {showNavbar && <Navbar />}
        <Routes>
           <Route path="/home" element={<ProtectedRoute><Home /></ProtectedRoute>} /> 
           <Route path="/cart" element={<ProtectedRoute><Cart /></ProtectedRoute>} /> 
