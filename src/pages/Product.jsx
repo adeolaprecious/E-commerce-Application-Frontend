@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import ProductItem from '../components/ProductItem';
+import Loader from '../components/Loader';
 
 const API_BASE_URL = 'https://e-commerce-application-backend-u42p.onrender.com';
 
@@ -24,20 +25,22 @@ const Products = () => {
     }, []);
 
     if (loading) {
-        return <div className="text-center mt-20 text-xl">Loading entire catalog...</div>;
+        return <Loader />
     }
 
     return (
-        <div className="container mx-auto p-8">
-            <h1 className="text-4xl font-extrabold mb-8 text-center text-gray-800">
-                Product Catalog
-            </h1>
-            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8">
-                {products.map(product => (
-                    <ProductItem key={product._id} product={product} />
-                ))}
+        <>
+            <div className="container mx-auto p-8">
+                <h1 className="text-4xl font-extrabold mb-8 text-center text-amber-500">
+                    Product Catalog
+                </h1>
+                <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8">
+                    {products.map(product => (
+                        <ProductItem key={product._id} product={product} />
+                    ))}
+                </div>
             </div>
-        </div>
+        </>
     );
 }
 

@@ -46,43 +46,45 @@ const Cart = () => {
     }
 
     return (
-        <div className="container mx-auto p-8 max-w-4xl">
-            <h1 className="text-3xl font-bold mb-8 text-center">Your Shopping Cart</h1>
-            <div className="space-y-4">
-                {cart.items.map((item, index) => (
-                    <div key={index} className="flex justify-between items-center p-4 border rounded-lg bg-white shadow-sm">
-                        <div className="flex items-center space-x-4">
-                            <img src={item.product.image || 'placeholder.png'} alt={item.product.name} className="w-16 h-16 object-cover rounded" />
-                            <div>
-                                <h3 className="font-semibold">{item.product.name}</h3>
-                                <p className="text-sm text-gray-600">${item.product.price.toFixed(2)} x {item.quantity}</p>
+        <>
+            <div className="container mx-auto p-8 max-w-4xl">
+                <h1 className="text-3xl font-bold mb-8 text-center">Your Shopping Cart</h1>
+                <div className="space-y-4">
+                    {cart.items.map((item, index) => (
+                        <div key={index} className="flex justify-between items-center p-4 border rounded-lg bg-white shadow-sm">
+                            <div className="flex items-center space-x-4">
+                                <img src={item.product.image || 'placeholder.png'} alt={item.product.name} className="w-16 h-16 object-cover rounded" />
+                                <div>
+                                    <h3 className="font-semibold">{item.product.name}</h3>
+                                    <p className="text-sm text-gray-600">${item.product.price.toFixed(2)} x {item.quantity}</p>
+                                </div>
                             </div>
+                            <div className="font-bold text-lg text-amber-600">
+                                ${(item.product.price * item.quantity).toFixed(2)}
+                            </div>
+                            <button
+                                onClick={() => removeFromCart(item.product._id)}
+                                className="text-red-500 hover:text-red-700 font-semibold text-sm"
+                            >
+                                Remove
+                            </button>
                         </div>
-                        <div className="font-bold text-lg text-amber-600">
-                            ${(item.product.price * item.quantity).toFixed(2)}
-                        </div>
-                        <button
-                            onClick={() => removeFromCart(item.product._id)}
-                            className="text-red-500 hover:text-red-700 font-semibold text-sm"
-                        >
-                            Remove
-                        </button>
-                    </div>
-                ))}
-            </div>
+                    ))}
+                </div>
 
-            <div className="mt-8 pt-4 border-t-2 border-amber-600 flex justify-between items-center">
-                <span className="text-2xl font-bold">Total:</span>
-                <span className="text-3xl font-extrabold text-amber-600">${calculateTotal().toFixed(2)}</span>
-            </div>
+                <div className="mt-8 pt-4 border-t-2 border-amber-600 flex justify-between items-center">
+                    <span className="text-2xl font-bold">Total:</span>
+                    <span className="text-3xl font-extrabold text-amber-600">${calculateTotal().toFixed(2)}</span>
+                </div>
 
-            <button
-                onClick={handleCheckout}
-                className="w-full mt-6 py-3 rounded-lg bg-amber-600 text-white font-semibold text-lg hover:bg-amber-700 transition duration-200"
-            >
-                Proceed to Checkout
-            </button>
-        </div>
+                <button
+                    onClick={handleCheckout}
+                    className="w-full mt-6 py-3 rounded-lg bg-amber-600 text-white font-semibold text-lg hover:bg-amber-700 transition duration-200"
+                >
+                    Proceed to Checkout
+                </button>
+            </div>
+        </>
     );
 }
 

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { CartContext } from './cartContextStore';
-const API_BASE_URL = 'https://e-commerce-application-backend-u42p.onrender.com'; 
+const API_BASE_URL = 'https://e-commerce-application-backend-u42p.onrender.com';
 
 export const CartProvider = ({ children }) => {
     // const [cart, setCart] = useState(null);
@@ -11,7 +11,7 @@ export const CartProvider = ({ children }) => {
     // --- Helper Function ---
     const getAuthHeader = () => {
         const token = localStorage.getItem('token');
-        if (!token) return null; 
+        if (!token) return null;
         return { headers: { Authorization: `Bearer ${token}` } };
     };
 
@@ -22,7 +22,7 @@ export const CartProvider = ({ children }) => {
             setCart({ items: [] });
             return;
         }
-        
+
         try {
             const response = await axios.get(`${API_BASE_URL}/api/cart`, headers);
             setCart(response.data);
@@ -73,20 +73,22 @@ export const CartProvider = ({ children }) => {
 
     useEffect(() => {
         fetchCart();
-    }, [fetchCart]); 
+    }, [fetchCart]);
 
     const value = {
         cart,
         loading,
         cartTotalItems,
         fetchCart,
-        addToCart,    
+        addToCart,
         removeFromCart,
     };
 
     return (
-        <CartContext.Provider value={value}>
-            {children}
-        </CartContext.Provider>
+        <>
+            <CartContext.Provider value={value}>
+                {children}
+            </CartContext.Provider>
+        </>
     );
 };

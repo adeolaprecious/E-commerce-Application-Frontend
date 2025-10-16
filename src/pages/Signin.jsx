@@ -53,7 +53,8 @@ const Signin = () => {
 
             <div className="flex items-center justify-between mb-4">
               <label className="flex items-center gap-2 text-sm">
-                <input type="checkbox" className="w-4 h-4" /> Remember me
+                <input type="checkbox" className="w-4 h-4" />Show password
+                
               </label>
               <a href="#" className="text-sm text-amber-600">Forgot password?</a>
             </div>
