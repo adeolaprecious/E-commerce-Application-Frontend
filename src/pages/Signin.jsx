@@ -3,10 +3,12 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
 import logo1 from '../assets/images/logo1.png'
+import { toast } from 'react-toastify';
 
 const Signin = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [showPassword, setShowPassword] = useState(false)
   const navigate = useNavigate()
 
   const loginUser = () => {
@@ -16,18 +18,16 @@ const Signin = () => {
         console.log("Response:", res.data);
 
         if (res.data.message === "Login successful") {
-          alert("Welcome back!");
-          // localStorage.token = res.data.user.token
+          toast.success("Welcome back!");
           localStorage.setItem("token", res.data.user.token);
-          // ✅ Redirect to dashboard, not "/"
           navigate("/home");
         } else {
-          alert(res.data.message || "Invalid credentials");
+          toast.error(res.data.message || "Invalid credentials");
         }
       })
       .catch((err) => {
         console.error("Error:", err.response ? err.response.data : err);
-        alert("Login failed. Please check your email or password.");
+        toast.error("Login failed. Please check your email or password.");
       });
   }
 
@@ -48,13 +48,13 @@ const Signin = () => {
 
             <div className="mb-4">
               <label htmlFor="password" className="block text-sm font-medium mb-1">Password</label>
-              <input type="password" id="password" name="password" className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-amber-300" required onChange={(e) => setPassword(e.target.value)} />
+              <input type={showPassword ? 'text' : 'password'} id="password" name="password" className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-amber-300" required onChange={(e) => setPassword(e.target.value)} />
             </div>
 
             <div className="flex items-center justify-between mb-4">
               <label className="flex items-center gap-2 text-sm">
-                <input type="checkbox" className="w-4 h-4" />Show password
-                
+                <input type="checkbox" className="w-4 h-4" onChange={(e)=>setShowPassword(e.target.checked)} />Show password
+
               </label>
               <a href="#" className="text-sm text-amber-600">Forgot password?</a>
             </div>

@@ -1,25 +1,22 @@
 import React from 'react';
 import { useCart } from '../context/useCart';
-// Assume you'll implement a context or Redux action for adding to cart
-// import { useCart } from '../context/CartContext';
+
 
 const ProductItem = ({ product }) => {
     const { addToCart } = useCart();
 
     const handleAddToCart = () => {
-        // Implement logic to add this product to the cart (e.g., call addToCart(product._id))
         addToCart(product._id, 1);
         console.log(`Added product ${product.name} to cart!`);
     };
 
     return (
         <>
-            <div
-                className="bg-[#fbf6ef] border border-[#f0e8dd] rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 p-5 flex flex-col items-center w-full max-w-sm">
+            <div className="bg-[#fbf6ef] border border-[#f0e8dd] rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 p-5 flex flex-col items-center w-full max-w-sm">
                 <div className="w-full h-48 overflow-hidden rounded-xl mb-4">
                     <img src={product.image || "placeholder.png"} alt={product.name} className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"/>
                 </div>
-                <div className="flex flex-col gap-2 text-center mb-4">
+                <div className="flex flex-col gap-2 text-center mb-4 h-40">
                     <h3 className="text-lg font-semibold text-amber-600 leading-tight">{product.name}</h3>
                     <p className="text-sm text-amber-800 opacity-80 line-clamp-2">{product.description}</p>
                     <span className="text-xs font-medium text-amber-700 bg-amber-100 px-3 py-1 rounded-full w-fit mx-auto">{product.category}</span>

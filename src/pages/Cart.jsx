@@ -2,6 +2,7 @@ import React from 'react';
 import { useCart } from '../context/useCart';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const API_BASE_URL = 'https://e-commerce-application-backend-u42p.onrender.com';
 
@@ -24,14 +25,52 @@ const Cart = () => {
     const handleCheckout = async () => {
         if (!cart || cart.items.length === 0) return;
         try {
-            await axios.post(`${API_BASE_URL}/api/orders`, {}, getAuthHeader());
-            alert("Order placed successfully! Redirecting to orders page.");
-            await fetchCart();
-            navigate('/order');
+            const totalAmount = calculateTotal();
+            const token = localStorage.getItem('token');
+            const userEmail = localStorage.getItem('userEmail'); // store email at login
+
+            if (!userEmail) {
+                toast.error("Please sign in to continue checkout.");
+                return navigate("/signin");
+            }
+
+            // 🧩 Step 1: Create order
+            const orderRes = await axios.post(
+                `${API_BASE_URL}/api/orders`,
+                {
+                    userEmail,
+                    products: cart.items.map(item => ({
+                        name: item.product.name,
+                        price: item.product.price,
+                        quantity: item.quantity,
+                        image: item.product.image
+                    })),
+                    totalAmount
+                },
+                getAuthHeader()
+            );
+
+            const order = orderRes.data;
+
+            // 💳 Step 2: Initialize Paystack payment
+            const payRes = await axios.post(
+                `${API_BASE_URL}/api/payment/initialize`,
+                {
+                    email: userEmail,
+                    amount: totalAmount,
+                    reference: order._id, // link payment to order
+                }
+            );
+
+            const { authorization_url } = payRes.data.data;
+
+            toast.info("Redirecting to Paystack...");
+            // 🧾 Step 3: Redirect user to Paystack payment page
+            window.location.href = authorization_url;
 
         } catch (error) {
-            console.error("Checkout failed:", error);
-            alert("Checkout failed. Please try again.");
+            console.error("Checkout failed:", error.response?.data || error);
+            toast.error("Checkout failed. Please try again.");
         }
     };
 
@@ -56,11 +95,13 @@ const Cart = () => {
                                 <img src={item.product.image || 'placeholder.png'} alt={item.product.name} className="w-16 h-16 object-cover rounded" />
                                 <div>
                                     <h3 className="font-semibold">{item.product.name}</h3>
-                                    <p className="text-sm text-gray-600">${item.product.price.toFixed(2)} x {item.quantity}</p>
+                                    <p className="text-sm text-gray-600">
+                                        ₦{item.product.price.toFixed(2)} x {item.quantity}
+                                    </p>
                                 </div>
                             </div>
                             <div className="font-bold text-lg text-amber-600">
-                                ${(item.product.price * item.quantity).toFixed(2)}
+                                ₦{(item.product.price * item.quantity).toFixed(2)}
                             </div>
                             <button
                                 onClick={() => removeFromCart(item.product._id)}
@@ -74,7 +115,9 @@ const Cart = () => {
 
                 <div className="mt-8 pt-4 border-t-2 border-amber-600 flex justify-between items-center">
                     <span className="text-2xl font-bold">Total:</span>
-                    <span className="text-3xl font-extrabold text-amber-600">${calculateTotal().toFixed(2)}</span>
+                    <span className="text-3xl font-extrabold text-amber-600">
+                        ₦{calculateTotal().toFixed(2)}
+                    </span>
                 </div>
 
                 <button

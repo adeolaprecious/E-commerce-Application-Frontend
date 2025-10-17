@@ -1,14 +1,13 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { CartContext } from './cartContextStore';
+import { toast } from 'react-toastify';
 const API_BASE_URL = 'https://e-commerce-application-backend-u42p.onrender.com';
 
 export const CartProvider = ({ children }) => {
-    // const [cart, setCart] = useState(null);
     const [cart, setCart] = useState({ items: [] });
     const [loading, setLoading] = useState(true);
 
-    // --- Helper Function ---
     const getAuthHeader = () => {
         const token = localStorage.getItem('token');
         if (!token) return null;
@@ -37,17 +36,17 @@ export const CartProvider = ({ children }) => {
     const addToCart = async (productId, quantity = 1) => {
         const headers = getAuthHeader();
         if (!headers) {
-            alert("Please sign in to add items to your cart.");
+            toast.info("Please sign in to add items to your cart.");
             return;
         }
 
         try {
             const response = await axios.post(`${API_BASE_URL}/api/cart`, { productId, quantity }, headers);
             setCart(response.data);
-            alert('Item added to cart!');
+            toast.success('Item added to cart!');
         } catch (error) {
             console.error("Failed to add to cart:", error.response ? error.response.data : error);
-            alert("Failed to add item to cart. Please try again.");
+            toast.error("Failed to add item to cart. Please try again.");
         }
     };
 
@@ -55,17 +54,17 @@ export const CartProvider = ({ children }) => {
     const removeFromCart = async (productId) => {
         const headers = getAuthHeader();
         if (!headers) {
-            alert("Please sign in to manage your cart.");
+            toast.info("Please sign in to manage your cart.");
             return;
         }
 
         try {
             const response = await axios.delete(`${API_BASE_URL}/api/cart/${productId}`, headers);
             setCart(response.data);
-            alert("Item removed from cart.");
+            toast.success("Item removed from cart.");
         } catch (error) {
             console.error("Failed to remove from cart:", error.response ? error.response.data : error);
-            alert("Failed to remove item from cart.");
+            toast.error("Failed to remove item from cart.");
         }
     };
 

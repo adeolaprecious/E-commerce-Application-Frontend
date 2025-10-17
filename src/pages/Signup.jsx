@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 import logo1 from '../assets/images/logo1.png'
+import { toast } from 'react-toastify';
 
 const Signup = () => {
   const [firstName, setfirstName] = useState('')
@@ -15,16 +16,16 @@ const Signup = () => {
     let newUser = { firstName, lastName, email, password,}
     axios.post('https://e-commerce-application-backend-u42p.onrender.com/user/register', newUser)
       .then((res) => {
-        console.log('Response:', res.data);
-        alert(res.data.message || "Signup successful! Please login");
+  console.log('Response:', res.data);
+  toast.success(res.data.message || "Signup successful! Please login");
 
         setAllUsers([...allUsers, newUser]);
         navigate("/signin");
 
       })
       .catch((err) => {
-        console.error("Error:", err.response ? err.response.data : err);;
-        alert("Signup failed, try again later");
+  console.error("Error:", err.response ? err.response.data : err);;
+  toast.error("Signup failed, try again later");
 
       })
   };
