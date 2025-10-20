@@ -3,6 +3,7 @@ import axios from 'axios';
 import ProductItem from '../components/ProductItem';
 import { useCart } from '../context/useCart';
 import Loader from '../components/Loader';
+import Footer from '../components/Footer';
 
 const API_BASE_URL = 'https://e-commerce-application-backend-u42p.onrender.com';
 const Home = () => {
@@ -52,6 +53,7 @@ const Home = () => {
                     )}
                 </div>
             </div>
+            <Footer/>
         </>
     );
 }

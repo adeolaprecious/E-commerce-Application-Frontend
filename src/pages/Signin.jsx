@@ -56,7 +56,9 @@ const Signin = () => {
                 <input type="checkbox" className="w-4 h-4" onChange={(e)=>setShowPassword(e.target.checked)} />Show password
 
               </label>
-              <a href="#" className="text-sm text-amber-600">Forgot password?</a>
+              <a href="#" className="text-sm text-amber-600"></a>
+            <Link to="/forgot-password" className="text-sm text-amber-600">Forgot password?</Link>
+
             </div>
 
             <button type="button" className="w-full py-2 rounded-lg bg-amber-600 text-white font-medium hover:bg-amber-700" onClick={loginUser}>Sign in</button>

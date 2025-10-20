@@ -22,57 +22,77 @@ const Cart = () => {
         );
     };
 
+    // const handleCheckout = async () => {
+    //     if (!cart || cart.items.length === 0) return;
+    //     try {
+    //         const totalAmount = calculateTotal();
+    //         const token = localStorage.getItem('token');
+    //         const userEmail = localStorage.getItem('userEmail'); // store email at login
+
+    //         if (!userEmail) {
+    //             toast.error("Please sign in to continue checkout.");
+    //             return navigate("/signin");
+    //         }
+
+    //         // 🧩 Step 1: Create order
+    //         const orderRes = await axios.post(
+    //             `${API_BASE_URL}/api/orders`,
+    //             {
+    //                 userEmail,
+    //                 products: cart.items.map(item => ({
+    //                     name: item.product.name,
+    //                     price: item.product.price,
+    //                     quantity: item.quantity,
+    //                     image: item.product.image
+    //                 })),
+    //                 totalAmount
+    //             },
+    //             getAuthHeader()
+    //         );
+
+    //         const order = orderRes.data;
+
+    //         // 💳 Step 2: Initialize Paystack payment
+    //         const payRes = await axios.post(
+    //             `${API_BASE_URL}/api/payment/initialize`,
+    //             {
+    //                 email: userEmail,
+    //                 amount: totalAmount,
+    //                 reference: order._id, // link payment to order
+    //             }
+    //         );
+
+    //         const { authorization_url } = payRes.data.data;
+
+    //         toast.info("Redirecting to Paystack...");
+    //         // 🧾 Step 3: Redirect user to Paystack payment page
+    //         window.location.href = authorization_url;
+
+    //     } catch (error) {
+    //         console.error("Checkout failed:", error.response?.data || error);
+    //         toast.error("Checkout failed. Please try again.");
+    //     }
+    // };
+
     const handleCheckout = async () => {
         if (!cart || cart.items.length === 0) return;
         try {
+            const email = JSON.parse(atob(localStorage.getItem("token").split(".")[1])).email;
             const totalAmount = calculateTotal();
-            const token = localStorage.getItem('token');
-            const userEmail = localStorage.getItem('userEmail'); // store email at login
 
-            if (!userEmail) {
-                toast.error("Please sign in to continue checkout.");
-                return navigate("/signin");
-            }
-
-            // 🧩 Step 1: Create order
-            const orderRes = await axios.post(
-                `${API_BASE_URL}/api/orders`,
-                {
-                    userEmail,
-                    products: cart.items.map(item => ({
-                        name: item.product.name,
-                        price: item.product.price,
-                        quantity: item.quantity,
-                        image: item.product.image
-                    })),
-                    totalAmount
-                },
+            const response = await axios.post(`${API_BASE_URL}/api/payment/initialize`,
+                { email, amount: totalAmount },
                 getAuthHeader()
             );
 
-            const order = orderRes.data;
-
-            // 💳 Step 2: Initialize Paystack payment
-            const payRes = await axios.post(
-                `${API_BASE_URL}/api/payment/initialize`,
-                {
-                    email: userEmail,
-                    amount: totalAmount,
-                    reference: order._id, // link payment to order
-                }
-            );
-
-            const { authorization_url } = payRes.data.data;
-
-            toast.info("Redirecting to Paystack...");
-            // 🧾 Step 3: Redirect user to Paystack payment page
-            window.location.href = authorization_url;
-
+            const { authorization_url } = response.data.data;
+            window.location.href = authorization_url; // Redirect to Paystack checkout page
         } catch (error) {
-            console.error("Checkout failed:", error.response?.data || error);
+            console.error("Checkout failed:", error);
             toast.error("Checkout failed. Please try again.");
         }
     };
+
 
     if (loading) return <div className="text-center mt-20 text-xl">Loading cart...</div>;
     if (!cart || cart.items.length === 0) {
